@@ -31,8 +31,8 @@ const pRenderer = new WebGLRenderer();
 const oRenderer = new WebGLRenderer();
 pRenderer.setSize(750, 750);
 oRenderer.setSize(400, 400);
-document.body.appendChild(pRenderer.domElement);
-document.body.appendChild(oRenderer.domElement);
+document.getElementById("maze3d")?.appendChild(pRenderer.domElement);
+document.getElementById("maze2d")?.appendChild(oRenderer.domElement);
 
 const cone = new Mesh(
   new ConeGeometry(0.5),
@@ -98,4 +98,10 @@ window.addEventListener("keydown", (e: KeyboardEvent) => {
       turnLeft();
       break;
   }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("btn-l")?.addEventListener("click", turnLeft);
+  document.getElementById("btn-r")?.addEventListener("click", turnRight);
+  document.getElementById("btn-f")?.addEventListener("click", goForward);
 });

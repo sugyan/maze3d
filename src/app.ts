@@ -29,7 +29,7 @@ const oCamera = new OrthographicCamera(
 );
 const pRenderer = new WebGLRenderer();
 const oRenderer = new WebGLRenderer();
-pRenderer.setSize(400, 400);
+pRenderer.setSize(750, 750);
 oRenderer.setSize(400, 400);
 document.body.appendChild(pRenderer.domElement);
 document.body.appendChild(oRenderer.domElement);
@@ -42,19 +42,11 @@ cone.position.set(1, 1, 0);
 scene.add(cone);
 const player = new Player(maze, cone, pCamera);
 
-const plane = new Mesh(
-  new PlaneGeometry(size * 2 + 1, size * 2 + 1),
-  new MeshBasicMaterial({
-    color: 0x808080,
-  })
-);
-plane.position.set(size, size, -0.5);
-scene.add(plane);
 maze.forEach((row, i) => {
   row.forEach((col, j) => {
     if (!col) {
       const geometry = new BoxGeometry();
-      const material = new MeshStandardMaterial({ color: 0x004040 });
+      const material = new MeshStandardMaterial({ color: 0x606060 });
       const cube = new Mesh(geometry, material);
       cube.position.x = i;
       cube.position.y = j;

@@ -9,7 +9,8 @@ body {
 
 button {
     float: left;
-    width: 60px;
+    width: 90px;
     height: 60px;
-    margin: 20px;
+    margin: 22px;
+    background-color: aquamarine;
 }

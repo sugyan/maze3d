@@ -1,6 +1,7 @@
 body {
     margin: 0px;
     background-color: black;
+    user-select: none;
 }
 
 #maze3d {

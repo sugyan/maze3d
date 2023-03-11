@@ -29,7 +29,7 @@ const oCamera = new OrthographicCamera(
 );
 const pRenderer = new WebGLRenderer();
 const oRenderer = new WebGLRenderer();
-pRenderer.setSize(750, 750);
+pRenderer.setSize(800, 800);
 oRenderer.setSize(400, 400);
 document.getElementById("maze3d")?.appendChild(pRenderer.domElement);
 document.getElementById("maze2d")?.appendChild(oRenderer.domElement);
@@ -60,6 +60,10 @@ scene.add(ambientLight);
 const directionalLight = new DirectionalLight(0xffffff);
 directionalLight.position.set(1, 1, 1);
 scene.add(directionalLight);
+
+const oLight = new DirectionalLight(0xffffff);
+oLight.position.set(0, 0, 1);
+scene.add(oLight);
 
 pCamera.position.x = 1;
 pCamera.position.y = 1;

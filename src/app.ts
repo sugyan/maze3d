@@ -8,15 +8,17 @@ import {
   MeshStandardMaterial,
   OrthographicCamera,
   PerspectiveCamera,
-  PlaneGeometry,
+  RepeatWrapping,
   Scene,
+  TextureLoader,
   WebGLRenderer,
 } from "three";
 
 import { generateMaze } from "./maze";
 import { Player } from "./player";
+import image from "url:./data/wall_5_1.png";
 
-const size = 15;
+const size = 8;
 const maze = generateMaze(size);
 
 const scene = new Scene();
@@ -42,24 +44,41 @@ cone.position.set(1, 1, 0);
 scene.add(cone);
 const player = new Player(maze, cone, pCamera);
 
-maze.forEach((row, i) => {
-  row.forEach((col, j) => {
-    if (!col) {
-      const geometry = new BoxGeometry();
-      const material = new MeshStandardMaterial({ color: 0x606060 });
-      const cube = new Mesh(geometry, material);
-      cube.position.x = i;
-      cube.position.y = j;
-      scene.add(cube);
-    }
-  });
-});
+{
+  const loader = new TextureLoader();
+  loader.loadAsync(image).then((texture) => {
+    maze.forEach((row, i) => {
+      row.forEach((col, j) => {
+        if (!col) {
+          const geometry = new BoxGeometry();
+          texture.wrapS = RepeatWrapping;
+          texture.wrapT = RepeatWrapping;
+          texture.repeat.set(1, 1);
+          const materials = [
+            new MeshStandardMaterial({ map: texture.clone() }),
+            new MeshStandardMaterial({ map: texture.clone() }),
+            new MeshStandardMaterial({ map: texture.clone() }),
+            new MeshStandardMaterial({ map: texture.clone() }),
+            new MeshBasicMaterial({ color: 0x008080 }),
+          ];
+          materials[0].map!.rotation = Math.PI / 2;
+          materials[1].map!.rotation = -Math.PI / 2;
+          materials[2].map!.rotation = Math.PI;
 
-const ambientLight = new AmbientLight(0xffffff, 0.5);
+          const cube = new Mesh(geometry, materials);
+          cube.position.x = i;
+          cube.position.y = j;
+          scene.add(cube);
+        }
+      });
+    });
+    pRenderer.render(scene, pCamera);
+    oRenderer.render(scene, oCamera);
+  });
+}
+
+const ambientLight = new AmbientLight(0xffffff, 0.2);
 scene.add(ambientLight);
-const directionalLight = new DirectionalLight(0xffffff);
-directionalLight.position.set(1, 1, 1);
-scene.add(directionalLight);
 
 const oLight = new DirectionalLight(0xffffff);
 oLight.position.set(0, 0, 1);

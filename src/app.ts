@@ -16,7 +16,7 @@ import {
 
 import { generateMaze } from "./maze";
 import { Player } from "./player";
-import image from "url:./data/wall_5_1.png";
+import image from "url:./data/wall.png";
 
 const size = 8;
 const maze = generateMaze(size);
@@ -53,7 +53,7 @@ const player = new Player(maze, cone, pCamera);
           const geometry = new BoxGeometry();
           texture.wrapS = RepeatWrapping;
           texture.wrapT = RepeatWrapping;
-          texture.repeat.set(1, 1);
+          texture.repeat.set(3, 3);
           const materials = [
             new MeshStandardMaterial({ map: texture.clone() }),
             new MeshStandardMaterial({ map: texture.clone() }),
@@ -77,7 +77,7 @@ const player = new Player(maze, cone, pCamera);
   });
 }
 
-const ambientLight = new AmbientLight(0xffffff, 0.2);
+const ambientLight = new AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
 const oLight = new DirectionalLight(0xffffff);
